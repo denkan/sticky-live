@@ -5,6 +5,10 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+const HOST = settings.server.host;
+const PORT = settings.server.port;
+
+
 app.use(express.static('public'));
 
 io.on('connection', function(socket){
@@ -20,6 +24,6 @@ io.on('connection', function(socket){
 
 });
 
-http.listen(settings.ws.port, function(){
-  console.log(`listening on ${settings.ws.host}:${settings.ws.port}`);
+http.listen(PORT, function(){
+  console.log(`SERVER listening on ${HOST}:${PORT}`);
 });
