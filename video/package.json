@@ -1,0 +1,17 @@
+{
+  "name": "sticky-live-video",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "forever --killSignal=SIGTERM -c \"nodemon --watch . --watch ../_shared --exitcrash\" .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "forever": "^0.15.3",
+    "nodemon": "^1.11.0",
+    "socket.io": "^2.0.2"
+  }
+}

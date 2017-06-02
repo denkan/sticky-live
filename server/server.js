@@ -14,7 +14,10 @@ app.use(express.static('public'));
 io.on('connection', function(socket){
 
   // broadcast all "commands" to everybody
-  socket.on('command', data => socket.broadcast.emit('command', data));
+  socket.on('command', data => {
+    console.log('command', data);
+    socket.broadcast.emit('command', data)
+  });
 
   // ping pong privately
   socket.on('ping', data => {
