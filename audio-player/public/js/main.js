@@ -1,6 +1,7 @@
 (function ($) {
     var audioFiles = [];
-    var jPlayer, $jPlayer, $html;
+    var $html, jPlayer, $jPlayer,
+        settings, socket, connected;
 
     $(document).ready(function () {
         $html = $('html');
@@ -49,6 +50,52 @@
 
     function onPlayerLoaded(){
         $html.addClass('player-loaded');
+
+        initSocket();
+    }
+
+    function initSettings(callback){
+        $.getJSON('/settings', function(data){
+            settings = data;
+            callback && callback(data);
+        });
+    }
+
+    function initSocket(){
+        if(!settings) return initSettings(initSocket);
+
+        const socketUrl = 'http://'+settings.server.host+':'+settings.server.port;
+
+        // socket.io
+        socket = io(socketUrl, {
+            // options
+        }); 
+
+        socket.on('connect', _onConnect);
+        socket.on('reconnect', _onConnect);
+        socket.on('disconnect', _onDisconnect);
+        socket.on('reconnecting', _onReconnecting);
+        socket.on('reconnect_error', _onDisconnect);
+        socket.on('reconnect_failed', _onDisconnect);
+
+        var reconnectTimer;
+
+        function _onConnect(){
+            clearTimeout(reconnectTimer);
+            connected = true;
+            $html.removeClass('connecting').addClass('connected');
+        }
+        function _onDisconnect(){
+            connected = true;
+            $html.removeClass('connected').removeClass('connecting');
+        }
+        function _onReconnecting(){
+            clearTimeout(reconnectTimer);
+            reconnectTimer = setTimeout(function(){
+                $html.addClass('connecting');
+            }, 1000);
+        }
+
     }
 
 }(jQuery))

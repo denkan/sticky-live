@@ -9,7 +9,7 @@ html.player-loaded #loader { display: none; }
 .jp-gui { position: absolute; left: 0; top: 0; right: 0; width: 100%; height: 20%; background: #f0f0f0; overflow: hidden; }
 
 .jp-controls { position: relative; height: 60%; }
-.jp-controls .btn { background-repeat: no-repeat; background-position: center center; background-size: auto 50%; text-indent: -9999px;  }
+.jp-controls .btn { background-repeat: no-repeat; background-position: center center; background-size: auto 50%; border-radius: 0; text-indent: -9999px;  }
 .jp-controls .jp-play { background-image: url(../images/icons/play.png); }
 .jp-controls .jp-pause { background-image: url(../images/icons/pause.png); }
 .jp-controls .jp-stop { background-image: url(../images/icons/stop.png); }
@@ -43,4 +43,18 @@ html.player-loaded #loader { display: none; }
 .jp-playlist { position: absolute; top: 20%; left: 0; right: 0; bottom: 0; overflow: auto; }
 .jp-playlist .jp-playlist-item { display: block; padding: 2.5% 5%; border-bottom: 1px solid rgba(0,0,0,0.1); width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .jp-playlist a.jp-playlist-current { background: #158cba; color: white; }
- .jp-state-playing .jp-playlist a.jp-playlist-current { padding-left: 12%; background: #ff851b url(../images/icons/play.png) no-repeat 5% center; background-size: auto 50%; }
+.jp-state-playing .jp-playlist a.jp-playlist-current { padding-left: 12%; background: #ff851b url(../images/icons/play.png) no-repeat 5% center; background-size: auto 50%; }
+
+
+#socket-status { margin: 0; position: fixed; bottom: 0; left: 0; right: 0; z-index: 3; }
+#socket-status .progress { margin: 0; border: 0; border-radius: 0; }
+#socket-status .progress-bar { width: 100%; }
+#socket-status .disconnected { display: block; }
+#socket-status .connecting  { display: none; }
+#socket-status .connected    { display: none; }
+html.connected  #socket-status .disconnected { display: none;  }
+html.connected  #socket-status .connecting   { display: none;  }
+html.connected  #socket-status .connected    { display: block; }
+html.connecting #socket-status .disconnected { display: none;  }
+html.connecting #socket-status .connecting   { display: block; }
+html.connecting #socket-status .connected    { display: none;  }
