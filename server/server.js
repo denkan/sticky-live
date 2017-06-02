@@ -15,14 +15,13 @@ io.on('connection', function(socket){
 
   // broadcast all "commands" to everybody
   socket.on('command', data => {
-    console.log('command', data);
+    console.log(`### COMMAND from ${socket.id}`, data);
     socket.broadcast.emit('command', data)
   });
 
-  // ping pong privately
-  socket.on('ping', data => {
-    console.log(`ping from ${socket.id}`);
-    socket.emit('pong', data);
+  // info messages, for server only
+  socket.on('info', data => {
+    console.log(`### INFO from ${socket.id}`, data);
   });
 
 });
