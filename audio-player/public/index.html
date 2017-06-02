@@ -3,7 +3,8 @@
 <head>
     <title>Sticky Live Audio Player</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="/css/jplayer.blue.monday.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap-lumen.min.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -12,15 +13,20 @@
     <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
         <div class="jp-type-playlist">
             <div class="jp-gui jp-interface">
-                <div class="jp-controls">
-                    <button class="jp-previous" role="button" tabindex="0">previous</button>
-                    <button class="jp-play" role="button" tabindex="0">play</button>
-                    <button class="jp-next" role="button" tabindex="0">next</button>
-                    <button class="jp-stop" role="button" tabindex="0">stop</button>
+                <div class="jp-controls btn-group btn-group-justified">
+                    <a class="jp-previous btn btn-primary" role="button" tabindex="0">backward</a>
+                    <a class="jp-play btn btn-success btn-lg" role="button" tabindex="0">play</a>
+                    <a class="jp-pause btn btn-warning btn-lg" role="button" tabindex="0">pause</a>
+                    <a class="jp-stop btn btn-danger btn-lg" role="button" tabindex="0">stop</i></a>
+                    <a class="jp-next btn btn-primary" role="button" tabindex="0">forward</i></a>
                 </div>
                 <div class="jp-progress">
                     <div class="jp-seek-bar">
                         <div class="jp-play-bar"></div>
+                    </div>
+                    <div class="jp-time-holder">
+                        <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+                        <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
                     </div>
                 </div>
                 <div class="jp-volume-controls">
@@ -30,17 +36,13 @@
                         <div class="jp-volume-bar-value"></div>
                     </div>
                 </div>
-                <div class="jp-time-holder">
-                    <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
-                    <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
-                </div>
                 <div class="jp-toggles">
                     <button class="jp-repeat" role="button" tabindex="0">repeat</button>
                     <button class="jp-shuffle" role="button" tabindex="0">shuffle</button>
                 </div>
             </div>
             <div class="jp-playlist">
-                <ul>
+                <ul class="list-group">
                     <li>&nbsp;</li>
                 </ul>
             </div>
@@ -51,6 +53,7 @@
         </div>
     </div>
 
+    <div id="loader"></div>
 
 
     <script src="/js/jquery-3.2.1.min.js"></script>

@@ -1,9 +1,9 @@
 (function ($) {
     var audioFiles = [];
+    var jPlayer, $jPlayer, $html;
 
     $(document).ready(function () {
-        $player = $('#player');
-
+        $html = $('html');
         initAudioFiles(initPlayer);
     });
 
@@ -22,8 +22,16 @@
 
 
     function initPlayer() {
-        new jPlayerPlaylist({
-            jPlayer: '#jquery_jplayer_1',
+        var jPlayerSelector = '#jquery_jplayer_1';
+        $jPlayer = $(jPlayerSelector);
+
+        $jPlayer.bind($.jPlayer.event.ready + ".denk", onPlayerLoaded);
+        $jPlayer.bind($.jPlayer.event.setmedia + ".denk", function disableAutoPlay(){
+            setTimeout($.jPlayer.pause, 0);
+        });
+
+        jPlayer = new jPlayerPlaylist({
+            jPlayer: jPlayerSelector,
             cssSelectorAncestor: '#jp_container_1'
         }, audioFiles, {
             swfPath: '/js',
@@ -31,10 +39,16 @@
             wmode: 'window',
             useStateClassSkin: true,
             autoBlur: false,
-            smoothPlayBar: true,
-            keyEnabled: true
+            smoothPlayBar: false,
+            keyEnabled: true,
+            playlistOptions: {
+                autoPlay: false
+            },
         });
     }
 
+    function onPlayerLoaded(){
+        $html.addClass('player-loaded');
+    }
 
 }(jQuery))
