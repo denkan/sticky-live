@@ -39,8 +39,12 @@ function setVideo(name, opts){
 
 
     console.log('set video...', name);
-    if(video && video.getStatus && video.getStatus().playing){
-        video.stop();
+    if(video && video.getStatus){
+        const status = video.getStatus();
+        if(status.current === filePath && status.args['--loop'])
+          return // looping same file atm = dont change
+        if(status.playing)
+            video.stop();
     }
     video = manager.create(name, { 
         '--loop': !!opts.loop,
