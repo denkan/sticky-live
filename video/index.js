@@ -20,6 +20,8 @@ var socketUrl = `http://${settings.server.host}:${settings.server.port}`,
 console.log('connecting to socket server', socketUrl);
 socket.on('connect', () => console.log('connected to socket server', socketUrl));
 
+socket.on('command', listenForCommands);
+
 
 // omxplayer instance
 var video;
@@ -36,6 +38,7 @@ function setVideo(name, opts){
     if(!fs.existsSync(filePath)) return;
 
 
+    console.log('set video...', name);
     if(video && video.getStatus && video.getStatus().playing){
         video.stop();
     }
@@ -68,4 +71,27 @@ function sendMessage(type, action, data){
         action: action,
         data: data
     });
+}
+
+
+function listenForCommands(data){
+    onCommandDo(data, 'audio-player', 'play', playByAudioData);
+    onCommandDo(data, 'audio-player', 'stop', setDefaultVideo);
+}
+
+function onCommandDo(data, matchSender, matchAction, callback){
+    data = data || {};
+    data.sender = (data.sender+'').toLowerCase();
+    data.action = (data.action+'').toLowerCase();
+    
+    if(data.sender === matchSender && data.action === matchAction){
+        return callback(data.data);
+    }
+}
+
+function playByAudioData(audioData){
+    let name = ((audioData||{}).fileName+'');
+    name = name.substr(0, name.lastIndexOf('.'));
+    console.log('set video by audio command...', name);
+    setVideo(name);
 }
