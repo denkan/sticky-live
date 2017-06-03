@@ -119,8 +119,13 @@
                 data: data
             }
         }
+        var _sendMessageTimer = null;
         function _sendMessage(type, action, data){
-            socket.emit(type, _createMessage(action, data));
+            // add delay due to play/pause issue at player
+            clearTimeout(_sendMessageTimer);
+            _sendMessageTimer = setTimeout(function(){
+                socket.emit(type, _createMessage(action, data));
+            }, 250);            
         }
 
         function _sendPlay(e){
