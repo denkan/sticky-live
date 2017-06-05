@@ -65,6 +65,7 @@
         if(!settings) return initSettings(initSocket);
 
         const socketUrl = 'http://'+settings.server.host+':'+settings.server.port;
+        $('.server-host').text(socketUrl);
 
         // socket.io
         socket = io(socketUrl, {
