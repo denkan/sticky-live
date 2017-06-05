@@ -1,11 +1,15 @@
 {
-  "name": "sticky-live-audio-player",
+  "name": "sticky-live",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "start": "forever --killSignal=SIGTERM -c \"nodemon --watch . --watch ../_shared --exitcrash\" .",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://denkan@github.com/denkan/sticky-live.git"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +17,11 @@
     "express": "^4.15.3",
     "forever": "^0.15.3",
     "nodemon": "^1.11.0",
+    "omx-manager": "^0.1.4",
     "socket.io": "^2.0.2"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/denkan/sticky-live/issues"
+  },
+  "homepage": "https://github.com/denkan/sticky-live#readme"
 }

@@ -8,9 +8,9 @@ const fs = require('fs');
 const HOST = settings.client.host;
 const PORT = settings.client.port;
 
-const AUDIO_DIR = './audios'
+const AUDIO_DIR = __dirname+'/audios';
 
-app.use(express.static('public'));
+app.use(express.static(__dirname+'/public'));
 
 // get list of audio files
 app.get('/audios', (req, res) => {
