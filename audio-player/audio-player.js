@@ -5,9 +5,7 @@ const app = express();
 const http = require('http').Server(app);
 const fs = require('fs');
 
-const HOST = settings.client.host;
-const PORT = settings.client.port;
-
+const PORT = settings.audioPlayer.port;
 const AUDIO_DIR = __dirname+'/audios';
 
 app.use(express.static(__dirname+'/public'));
@@ -35,5 +33,5 @@ app.use('/socket.io',express.static('./node_modules/socket.io-client/dist'));
 
 
 http.listen(PORT, function(){
-  console.log(`AUDIO-PLAYER listening on ${HOST}:${PORT}`);
+  console.log(`AUDIO-PLAYER listening on port ${PORT}`);
 });

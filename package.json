@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "forever --killSignal=SIGTERM -c \"nodemon --watch . --watch ../_shared --exitcrash\" .",
+    "start": "forever --killSignal=SIGTERM -c \"nodemon --exitcrash\" .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
