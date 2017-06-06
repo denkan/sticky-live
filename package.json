@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "forever --killSignal=SIGTERM -c \"nodemon --exitcrash\" .",
+    "start": "npm run start:prod",
+    "start:dev": "forever --killSignal=SIGTERM -c \"nodemon --exitcrash\" .",
+    "start:prod": "forever --killSignal=SIGTERM .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
