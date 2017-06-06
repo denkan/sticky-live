@@ -17,8 +17,8 @@ manager.setVideosExtension(VIDEO_EXT);
 var socketUrl = `http://${settings.server.host}:${settings.server.port}`,
     socket = io.connect(socketUrl);
 
-console.log('connecting to socket server', socketUrl);
-socket.on('connect', () => console.log('connected to socket server', socketUrl));
+console.info('[VIDEO]','connecting to socket server', socketUrl);
+socket.on('connect', () => console.info('[VIDEO]','connected to socket server', socketUrl));
 
 socket.on('command', listenForCommands);
 
@@ -38,7 +38,7 @@ function setVideo(name, opts){
     if(!fs.existsSync(filePath)) return;
 
 
-    console.log('set video...', name);
+    console.log('[VIDEO]','set video...', name);
     if(video && video.getStatus){
         const status = video.getStatus();
         if(status.current === filePath && status.args['--loop'])
@@ -56,7 +56,7 @@ function setVideo(name, opts){
     sendMessage('info', 'play', video.getStatus());
 
     video.on('end', function(){
-        console.log('video ended, back to default...');
+        console.log('[VIDEO]','video ended, back to default...');
         setDefaultVideo();
     });
 }
@@ -67,7 +67,7 @@ function setDefaultVideo(){
 
 function sendMessage(type, action, data){
     if(!socket || !socket.emit) {
-        console.error('Tried to send message, but no socket: ', socket);
+        console.error('[VIDEO]', 'Tried to send message, but no socket: ', socket);
         return;
     }
     socket.emit(type, {
@@ -96,6 +96,6 @@ function onCommandDo(data, matchSender, matchAction, callback){
 function playByAudioData(audioData){
     let name = ((audioData||{}).fileName+'');
     name = name.substr(0, name.lastIndexOf('.'));
-    console.log('set video by audio command...', name);
+    console.log('[VIDEO]','set video by audio command...', name);
     setVideo(name);
 }

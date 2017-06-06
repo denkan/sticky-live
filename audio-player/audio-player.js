@@ -33,5 +33,5 @@ app.use('/socket.io',express.static('./node_modules/socket.io-client/dist'));
 
 
 http.listen(PORT, function(){
-  console.log(`AUDIO-PLAYER listening on port ${PORT}`);
+  console.info('[AUDIO-PLAYER]',`listening on port ${PORT}`);
 });
