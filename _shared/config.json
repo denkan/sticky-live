@@ -1,9 +1,14 @@
 {
     "server": {
-        "host": "localhost",
+        "enabled": true,
+        "host": "192.168.43.6",
         "port": "8080"
     },
     "audioPlayer": {
+        "enabled": true,
         "port": "3000"
+    },
+    "video": {
+        "enabled": true
     }
 }
