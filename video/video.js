@@ -8,7 +8,7 @@ const VIDEO_DIR = './videos',
       VIDEO_EXT = '.mp4';
 
 const manager = new OmxManager();
-manager.setVideosDirectory(VIDEO_DIR);
+manager.setVideosDirectory(path.resolve(__dirname,VIDEO_DIR));
 manager.setVideosExtension(VIDEO_EXT);
 
 
