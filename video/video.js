@@ -11,6 +11,8 @@ const manager = new OmxManager();
 manager.setVideosDirectory(path.resolve(__dirname,VIDEO_DIR));
 manager.setVideosExtension(VIDEO_EXT);
 
+console.log('[VIDEO]', 'set video dir to', path.resolve(__dirname,VIDEO_DIR))
+
 
 
 // connect to socket server
