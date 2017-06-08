@@ -4,14 +4,14 @@ const fs = require('fs');
 const path = require('path');
 const OmxManager = require('omx-manager');
 
-const VIDEO_DIR = './videos',
+const VIDEO_DIR = path.resolve(__dirname,'./videos'),
       VIDEO_EXT = '.mp4';
 
 const manager = new OmxManager();
-manager.setVideosDirectory(path.resolve(__dirname,VIDEO_DIR));
+manager.setVideosDirectory(VIDEO_DIR);
 manager.setVideosExtension(VIDEO_EXT);
 
-console.log('[VIDEO]', 'set video dir to', path.resolve(__dirname,VIDEO_DIR))
+console.log('[VIDEO]', 'set video dir:', VIDEO_DIR);
 
 
 
@@ -35,12 +35,14 @@ setDefaultVideo();
 
 function setVideo(name, opts){
     opts = opts || {};
-    // check that file exists 
+
     const filePath = path.resolve(VIDEO_DIR, name+VIDEO_EXT);
+
+    console.log(`[VIDEO] set video: ${name} - path: ${filePath} - exists: ${fs.existsSync(filePath)}`);
+
+    // exit if file not exists
     if(!fs.existsSync(filePath)) return;
-
-
-    console.log('[VIDEO]','set video...', name);
+    
     if(video && video.getStatus){
         const status = video.getStatus();
         if(status.current === filePath && status.args['--loop'])
