@@ -65,6 +65,17 @@ html.connecting #socket-status .connecting   { display: block; }
 html.connecting #socket-status .connected    { display: none;  }
 
 
+#remote-bar { display: none; position: absolute; top: 0; left: 0; right: 0; height: 5%; cursor: pointer; background: #b015ba; color: white; font-weight: bold; text-transform: uppercase; }
+#remote-bar > div { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+#remote-bar .remote-on { display: none; }
+html.remote #remote-bar { display: block; opacity: 0.5; } 
+html.remote.remote-active #remote-bar { opacity: 1; }
+html.remote.remote-active #remote-bar .remote-on { display: inline; }
+html.remote.remote-active #remote-bar .remote-off { display: none; }
+html.remote .jp-gui { top: 5%; } 
+html.remote .jp-playlist { top: 25%; } 
+
+
 @keyframes playing {
     0%, 100% { transform: translateX(-10%); opacity: 0.5; }
     50% { transform: translateX(10%); opacity: 1; }

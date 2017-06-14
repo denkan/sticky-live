@@ -61,6 +61,17 @@
         });
     }
 
+    
+    function toggleRemote(){
+        $html.toggleClass('remote-active');
+    }
+    function isRemoteAvailable(){
+        return (window.location.search.toLowerCase() === '?remote');
+    }
+    function isRemote(){
+        return isRemoteAvailable() && $html.hasClass('remote-active');
+    }
+
     function initSocket(){
         if(!settings) return initSettings(initSocket);
 
@@ -78,6 +89,7 @@
         socket.on('reconnecting', _onReconnecting);
         socket.on('reconnect_error', _onDisconnect);
         socket.on('reconnect_failed', _onDisconnect);
+        socket.on('command', _listenForCommands);
 
         $jPlayer.bind($.jPlayer.event.play + '.denk', _sendPlay);
         //$jPlayer.bind($.jPlayer.event.timeupdate + '.denk', _sendPlayStatus);
@@ -89,6 +101,11 @@
             clearTimeout(reconnectTimer);
             connected = true;
             $html.removeClass('connecting').addClass('connected');
+
+            if(isRemoteAvailable()){
+                $html.addClass('remote');
+                $('#remote-bar').unbind('click').bind('click', toggleRemote);
+            }
         }
         function _onDisconnect(){
             connected = true;
@@ -131,7 +148,7 @@
 
         function _sendPlay(e){
             //console.log('_sendPlay', arguments);
-            _sendMessage('command', 'play', _playerStatus(e));
+            _sendMessage('command', isRemote()?'remote_play':'play', _playerStatus(e));
         }
         function _sendPlayStatus(e){
             //console.log('_sendPlayStatus', arguments);
@@ -139,7 +156,51 @@
         }
         function _sendStop(e){
             //console.log('_sendStop', arguments);
-            _sendMessage('command', 'stop', _playerStatus(e));
+            _sendMessage('command', isRemote()?'remote_stop':'stop', _playerStatus(e));
+        }
+
+        
+        function _listenForCommands(data){
+            //console.log('command', data);
+            if(isRemote()) return;
+            _onCommandDo(data, 'audio-player', 'remote_play', _playByRemote);
+            _onCommandDo(data, 'audio-player', 'remote_stop', _stopByRemote);
+        }
+
+        function _onCommandDo(data, matchSender, matchAction, callback){
+            data = data || {};
+            data.sender = (data.sender+'').toLowerCase();
+            data.action = (data.action+'').toLowerCase();
+            
+            if(data.sender === matchSender && data.action === matchAction){
+                return callback(data.data);
+            }
+        }
+
+        function _trackIndexByFileName(fileName){
+            return audioFiles.findIndex(function(f){
+                return '/audios/'+fileName === f.mp3;
+            });
+        }
+
+        function _playOrPauseByRemote(playOrPause ,data){
+            data = data || {};
+            var trackIndex = _trackIndexByFileName(data.fileName);
+
+            // select track
+            if(trackIndex >= 0) {
+                jPlayer.select(trackIndex);
+            }
+            // after selecting, play/pause at given time
+            setTimeout(function(){
+                $jPlayer.jPlayer(playOrPause, data.currentTime || 0);
+            }, 0);
+        }
+        function _playByRemote(data){
+            _playOrPauseByRemote('play', data);
+        }
+        function _stopByRemote(data){
+            _playOrPauseByRemote('pause', data);
         }
 
     }
